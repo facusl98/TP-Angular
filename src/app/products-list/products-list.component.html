@@ -1,0 +1,27 @@
+<table class="table border">
+    <thead>
+        <tr>
+            <th></th>
+            <th>nombre</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <td><img [src]="product.image" [alt]="product.name"/></td>
+            <td>{{product.name}}</td>
+            <td>{{product.price | currency}}</td>
+            <td>
+                <span *ngIf="product.stock == 0; else conStock" class="badge text-bg-warning">SIN STOCK</span>
+                <ng-template #conStock>
+                    <span> {{ product.stock }}</span>
+                </ng-template>
+            </td>
+            <td>
+                <app-input-number [(quantity)]="product.quantity" [max]="product.stock" *ngIf="product.stock !== 0"  (maxReached)="maxReached($event)"></app-input-number>
+            </td>   
+        </tr>
+    </tbody>
+</table>
